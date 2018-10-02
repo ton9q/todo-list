@@ -1,8 +1,27 @@
 import React, { Component } from 'react';
+import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc';
+
 import './App.css';
+
 import Header from './components/header';
 import TodoInput from './components/todoInput';
 import TodoItem from './components/todoItem';
+
+const SortableItem = SortableElement(({todo}) => 
+  <li>
+    <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo} />
+  </li>
+);
+
+const SortableList = SortableContainer(({todos}) => {
+  return (
+    <ul>
+      {todos.map((todo, index) => (
+        <SortableItem key={`item-${index}`} index={index} todo={todo} />
+      ))}
+    </ul>
+  );
+});
 
 class App extends Component {
   constructor(props) {
@@ -37,19 +56,19 @@ class App extends Component {
     });
   }
 
+  onSortEnd = ({oldIndex, newIndex}) => {
+    this.setState({
+      todos: arrayMove(this.state.todos, oldIndex, newIndex),
+    });
+  };
+
   render() {
     return (
       <div className="App">
         <div className="todo-wrapper">
-          <Header/>
-          <TodoInput todoText="" addTodo={this.addTodo}/>
-          <ul>
-            {
-              this.state.todos.map((todo) => {
-                return <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo}/>
-              })
-            }
-          </ul>
+          <Header />
+          <TodoInput todoText="" addTodo={this.addTodo} />
+          <SortableList todos={this.state.todos} onSortEnd={this.onSortEnd} />;
         </div>
       </div>
     );
