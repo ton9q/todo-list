@@ -7,17 +7,17 @@ import Header from './components/header';
 import TodoInput from './components/todoInput';
 import TodoItem from './components/todoItem';
 
-const SortableItem = SortableElement(({todo}) => 
+const SortableItem = SortableElement(({todo, remove}) => 
   <li>
-    <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={this.removeTodo} />
+    <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={remove} />
   </li>
 );
 
-const SortableList = SortableContainer(({todos}) => {
+const SortableList = SortableContainer(({todos, remove}) => {
   return (
     <ul>
       {todos.map((todo, index) => (
-        <SortableItem key={`item-${index}`} index={index} todo={todo} />
+        <SortableItem key={`item-${index}`} index={index} todo={todo} remove={remove} />
       ))}
     </ul>
   );
@@ -52,7 +52,7 @@ class App extends Component {
 
   removeTodo(id) {
     this.setState({
-      todos: this.state.todos.filter((todo, index) => todo.id !== id)
+      todos: this.state.todos.filter((todo) => todo.id !== id)
     });
   }
 
@@ -63,12 +63,14 @@ class App extends Component {
   };
 
   render() {
+    console.log(this.state)
+
     return (
       <div className="App">
         <div className="todo-wrapper">
           <Header />
           <TodoInput todoText="" addTodo={this.addTodo} />
-          <SortableList todos={this.state.todos} onSortEnd={this.onSortEnd} />;
+          <SortableList todos={this.state.todos} onSortEnd={this.onSortEnd} remove={this.removeTodo}/>
         </div>
       </div>
     );
