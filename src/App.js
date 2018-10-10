@@ -7,6 +7,7 @@ import Header from './components/header';
 import TodoInput from './components/todoInput';
 import TodoItem from './components/todoItem';
 
+import EnchancedCounter from './containers/enchancedCounter';
 const SortableItem = SortableElement(({todo, remove}) => 
   <li>
     <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={remove} />
@@ -63,14 +64,13 @@ class App extends Component {
   };
 
   render() {
-    console.log(this.state)
-
     return (
       <div className="App">
         <div className="todo-wrapper">
           <Header />
           <TodoInput todoText="" addTodo={this.addTodo} />
           <SortableList todos={this.state.todos} onSortEnd={this.onSortEnd} remove={this.removeTodo}/>
+          <EnchancedCounter />
         </div>
       </div>
     );
