@@ -4,7 +4,7 @@
   margin-bottom: 10px;
 }
 
-.removeTodo {
+.removeTodo, .changeTodo {
   margin-right: 20px;
   margin-bottom: 10px;
   outline: none;
@@ -16,4 +16,8 @@
   color: rgba(283, 28, 32, 0.4); 
   border-color: rgba(283, 28, 32, 0.4);
   background-color: transparent; 
+}
+
+.inputChangeTodo {
+  width: 55%;
 }

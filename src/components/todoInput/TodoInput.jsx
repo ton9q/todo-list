@@ -15,7 +15,9 @@ export default class TodoInput extends Component {
   }
 
   handleChange(e) {
-    this.setState({value: e.target.value});
+    this.setState({
+      value: e.target.value
+    });
   }
 
   addTodo(todo) {
