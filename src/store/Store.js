@@ -1,7 +1,7 @@
 import {createStore, applyMiddleware, compose} from 'redux';
 import {createLogger} from 'redux-logger';
 
-import reducers from './reducers';
+import AllReducers from '../reducers/Index';
 
 const logger = createLogger({
   collapsed: (getState, action, logEntry) => !logEntry.error
@@ -10,7 +10,7 @@ const logger = createLogger({
 const middleware = applyMiddleware(logger);
 
 const store = createStore(
-  reducers,
+  AllReducers,
   compose(middleware, window.devToolsExtension ? window.devToolsExtension() : f => f)
 );
 

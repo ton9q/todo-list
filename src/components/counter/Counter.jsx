@@ -1,5 +1,6 @@
 import React from 'react';
-import './counter.css';
+
+import './Counter.css';
 
 export const Counter = (props) => (
   <div>

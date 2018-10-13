@@ -3,11 +3,11 @@ import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 
 import './App.css';
 
-import Header from './components/header';
-import TodoInput from './components/todoInput';
-import TodoItem from './components/todoItem';
+import Header from './components/header/Header';
+import TodoItem from './components/todoItem/TodoItem';
+import TodoInput from './components/todoInput/TodoInput';
+import EnchancedCounter from './containers/EnchancedCounter';
 
-import EnchancedCounter from './containers/enchancedCounter';
 const SortableItem = SortableElement(({todo, remove}) => 
   <li>
     <TodoItem todo={todo} key={todo.id} id={todo.id} removeTodo={remove} />
@@ -39,15 +39,18 @@ class App extends Component {
 
     this.addTodo = this.addTodo.bind(this);
     this.removeTodo = this.removeTodo.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
   }
 
   addTodo(todoText) {
     let todos = this.state.todos.slice();
 
     todos.push({id: this.state.nextId, text: todoText});
+    let newNextId = this.state.nextId + 1;
+
     this.setState({
       todos: todos,
-      nextId: ++this.state.nextId
+      nextId: newNextId
     });
   }
 
@@ -66,12 +69,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="todo-wrapper">
-          <Header />
-          <TodoInput todoText="" addTodo={this.addTodo} />
-          <SortableList todos={this.state.todos} onSortEnd={this.onSortEnd} remove={this.removeTodo}/>
-          <EnchancedCounter />
-        </div>
+        <Header />
+        <TodoInput addTodo={this.addTodo} />
+        <SortableList todos={this.state.todos} onSortEnd={this.onSortEnd} remove={this.removeTodo} />
+        <EnchancedCounter />
       </div>
     );
   }
